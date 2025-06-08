@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - DownloadHub</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="admin-body">
+    <div class="admin-container">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">DownloadHub Admin</div>
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="#dashboard" class="active"><i class="fas fa-chart-line"></i> Tableau de bord</a></li>
+                    <li><a href="#products"><i class="fas fa-box"></i> Produits</a></li>
+                    <li><a href="#users"><i class="fas fa-users"></i> Utilisateurs</a></li>
+                    <li><a href="#stats"><i class="fas fa-chart-bar"></i> Statistiques</a></li>
+                    <li><a href="#settings"><i class="fas fa-cog"></i> Paramètres</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <div class="admin-search">
+                    <input type="text" placeholder="Rechercher...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+                <div class="admin-user">
+                    <span>Admin</span>
+                    <img src="https://via.placeholder.com/40" alt="Admin">
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <section id="dashboard" class="admin-section active">
+                    <h2>Tableau de bord</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <i class="fas fa-download"></i>
+                            <div class="stat-info">
+                                <h3>Total Téléchargements</h3>
+                                <p class="stat-number">1,234</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-users"></i>
+                            <div class="stat-info">
+                                <h3>Utilisateurs</h3>
+                                <p class="stat-number">567</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-box"></i>
+                            <div class="stat-info">
+                                <h3>Produits</h3>
+                                <p class="stat-number">89</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="products" class="admin-section">
+                    <h2>Gestion des Produits</h2>
+                    <button class="add-product-btn"><i class="fas fa-plus"></i> Ajouter un produit</button>
+                    <div class="products-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Image</th>
+                                    <th>Titre</th>
+                                    <th>Catégorie</th>
+                                    <th>Téléchargements</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-table-body">
+                                <!-- Les produits seront ajoutés dynamiquement -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="users" class="admin-section">
+                    <h2>Gestion des Utilisateurs</h2>
+                    <div class="users-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nom</th>
+                                    <th>Email</th>
+                                    <th>Rôle</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body">
+                                <!-- Les utilisateurs seront ajoutés dynamiquement -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="stats" class="admin-section">
+                    <h2>Statistiques</h2>
+                    <div class="stats-charts">
+                        <div class="chart-container">
+                            <h3>Téléchargements par jour</h3>
+                            <canvas id="downloads-chart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <h3>Produits par catégorie</h3>
+                            <canvas id="categories-chart"></canvas>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="settings" class="admin-section">
+                    <h2>Paramètres</h2>
+                    <form id="settings-form" class="settings-form">
+                        <div class="form-group">
+                            <label>Nom du site</label>
+                            <input type="text" name="site-name" value="DownloadHub">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="site-description">Votre plateforme de téléchargement</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Thème</label>
+                            <select name="theme">
+                                <option value="light">Clair</option>
+                                <option value="dark">Sombre</option>
+                            </select>
+                        </div>
+                        <button type="submit">Enregistrer les modifications</button>
+                    </form>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal pour ajouter/modifier un produit -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Ajouter un produit</h2>
+            <form id="product-form">
+                <div class="form-group">
+                    <label>Titre</label>
+                    <input type="text" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Catégorie</label>
+                    <select name="category" required>
+                        <option value="Documents">Documents</option>
+                        <option value="Images">Images</option>
+                        <option value="Vidéos">Vidéos</option>
+                        <option value="Audio">Audio</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Fichier</label>
+                    <input type="file" name="file" required>
+                </div>
+                <div class="form-group">
+                    <label>Image de prévisualisation</label>
+                    <input type="file" name="image" accept="image/*" required>
+                </div>
+                <button type="submit">Enregistrer</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html> 
